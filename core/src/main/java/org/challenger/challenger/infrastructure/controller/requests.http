@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8080/api/v1/challenges/123
+GET http://localhost:8080/api/v1/challenges/58961296-9db6-4e49-a91d-5fa2ed6c26cf
 Content-Type: application/json
 
 
@@ -10,7 +10,13 @@ Content-Type: application/json
 
 {
   "name": "Pushkin",
-  "type": "random type"
+  "goal": 300,
+  "ownerUserId": "4321",
+  "userIds": [
+    "1",
+    "2",
+    "3"
+  ]
 }
 
 ###

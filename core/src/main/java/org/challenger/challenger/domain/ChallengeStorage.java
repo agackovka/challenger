@@ -1,17 +1,19 @@
 package org.challenger.challenger.domain;
 
-import org.challenger.challenger.domain.Challenge;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 //хранилище челенжей
+@Slf4j
 public class ChallengeStorage {
+
+    private static final Integer DEFAULT_PROGRESS = 0;
 
     //список челенджей
     private final List<Challenge> listChallenges = new ArrayList<>(3);
-    private final List<User> listUsers = new ArrayList<>(3);
-
     private final IdGenerator idGenerator;
 
     //+конструктор который будет принимать айди генератор
@@ -20,24 +22,23 @@ public class ChallengeStorage {
     }
 
     //создать
-    public void createChallenge(String name, String type, Integer goal, Integer progress, Integer userId, String userEmail, Integer submissionId) {
-        Challenge challenge = new Challenge(idGenerator.generateId(), name, type, goal, progress, userId, userEmail, submissionId);
+    public void createChallenge(String name, Integer goal, String userId, List<String> ids) {
+        Challenge challenge = new Challenge(idGenerator.generateId(), DEFAULT_PROGRESS, name, goal, userId, ids);
         listChallenges.add(challenge);
-        User user = new User(idGenerator.generateId(), userEmail);
-        listUsers.add(user);
+        log.info("createChallenge.exit; challengeId={}", challenge.getId());
     }
 
     // удалить
-    public void deleteChallenge(int x) {
-        listChallenges.remove(x);
+    public void deleteChallenge(String challengeId) {
+        listChallenges.removeIf(challenge -> Objects.equals(challengeId, challenge.getId()));
     }
 
     // получить
-    public Challenge receiveChallenge(int x) {
-        return listChallenges.get(x);
+    public Challenge getChallenge(String challengeId) {
+        return listChallenges.stream()
+            .filter(challenge -> Objects.equals(challengeId, challenge.getId()))
+            .findFirst().orElseThrow(() -> new IllegalArgumentException("Challenge not found by id"));
     }
 
-    // сабмишины юзеры (+email) задейстовать
-    // сабмишин
 
 }
