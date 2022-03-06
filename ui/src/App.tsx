@@ -8,19 +8,33 @@ function App() {
     useEffect(() => {
         API.get('/api/v1/challenges/1b87bdd5-df75-47be-a8f6-a8b3b4a935d5')
             .then((res: any) => {
-                console.log(res.data);
                 setChallenge(res.data)
             });
     }, []);
 
 
 
+    console.log(challenge)
   return (
     <div className="App">
       <h1>HI</h1>
+
       <h2>
           {challenge.name}
       </h2>
+        <h2>
+            {challenge.progress}
+        </h2>
+        <ul>
+            {challenge.users && challenge.users.map((el: any, idx: number) =>
+                <li key={idx}>{ el.userId }</li>
+            )}
+        </ul>
+        <ul>
+            {challenge.submissions && challenge.submissions.map((el: any, idx: number) =>
+                <li key={idx}>{ el.userId } {el.value}</li>
+            )}
+        </ul>
     </div>
   );
 }
