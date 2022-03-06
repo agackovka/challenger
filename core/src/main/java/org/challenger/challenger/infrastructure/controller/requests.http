@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8080/api/v1/challenges/58961296-9db6-4e49-a91d-5fa2ed6c26cf
+GET http://localhost:8080/api/v1/challenges/d382c4ae-fc26-44c3-846f-d85b98cbc95a
 Content-Type: application/json
 
 
@@ -11,7 +11,7 @@ Content-Type: application/json
 {
   "name": "Pushkin",
   "goal": 300,
-  "ownerUserId": "4321",
+  "ownerUserId": "3",
   "userIds": [
     "1",
     "2",
@@ -24,6 +24,7 @@ POST http://localhost:8080/api/v1/submissions
 Content-Type: application/json
 
 {
-  "challengeId": "123",
-  "value": 123
+  "userId": "1",
+  "challengeId": "d382c4ae-fc26-44c3-846f-d85b98cbc95a",
+  "value": 100
 }

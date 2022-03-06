@@ -3,6 +3,7 @@ package org.challenger.challenger.domain;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,10 +23,21 @@ public class ChallengeStorage {
     }
 
     //создать
-    public void createChallenge(String name, Integer goal, String userId, List<String> ids) {
-        Challenge challenge = new Challenge(idGenerator.generateId(), DEFAULT_PROGRESS, name, goal, userId, ids);
+    public Challenge createChallenge(String name, Integer goal, String userId, List<String> userIds) {
+        Challenge challenge = Challenge.builder()
+            .id(idGenerator.generateId())
+            .name(name)
+            .goal(goal)
+            .progress(DEFAULT_PROGRESS)
+            .ownerUserId(userId)
+            .userIds(userIds)
+            .submissions(new ArrayList<>())
+            .build();
+
         listChallenges.add(challenge);
         log.info("createChallenge.exit; challengeId={}", challenge.getId());
+
+        return challenge;
     }
 
     // удалить

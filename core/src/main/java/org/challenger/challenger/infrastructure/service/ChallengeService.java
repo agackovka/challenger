@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.challenger.challenger.domain.Challenge;
 import org.challenger.challenger.domain.ChallengeStorage;
+import org.challenger.challenger.domain.IdGenerator;
+import org.challenger.challenger.domain.Submission;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +16,21 @@ import java.util.List;
 public class ChallengeService {
 
 	private final ChallengeStorage challengeStorage;
+	private final IdGenerator idGenerator;
 
-	public void createChallenge(String name, Integer goal, String userId, List<String> ids) {
+	public Challenge createChallenge(String name, Integer goal, String userId, List<String> ids) {
 		// TODO no validation, will be added later
-		challengeStorage.createChallenge(name, goal, userId, ids);
+		return challengeStorage.createChallenge(name, goal, userId, ids);
 	}
 
 	public Challenge getChallenge(String challengeId) {
 		log.info("getChallenge.enter; challengeId={}", challengeId);
 		return challengeStorage.getChallenge(challengeId);
+	}
+
+	public void submit(String userId, String challengeId, Integer submissionValue) {
+		Challenge challenge = challengeStorage.getChallenge(challengeId);
+		challenge.getSubmissions().add(new Submission(idGenerator.generateId(), userId, submissionValue));
+		// save
 	}
 }

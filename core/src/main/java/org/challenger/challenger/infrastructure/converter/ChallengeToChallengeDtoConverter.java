@@ -1,6 +1,7 @@
 package org.challenger.challenger.infrastructure.converter;
 
 import org.challenger.challenger.domain.Challenge;
+import org.challenger.challenger.domain.Submission;
 import org.challenger.challenger.infrastructure.controller.dto.ChallengeDto;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +18,13 @@ public class ChallengeToChallengeDtoConverter extends BaseConverter<Challenge, C
 			challenge.getGoal(),
 			challenge.getProgress(),
 			new ChallengeDto.UserDto(challenge.getOwnerUserId()),
-			convertUserIds(challenge.getUserIds())
+			convertUserIds(challenge.getUserIds()),
+			convertSubmissions(challenge.getSubmissions())
 		);
+	}
+
+	private List<ChallengeDto.SubmissionDto> convertSubmissions(List<Submission> submissions) {
+		return submissions.stream().map(s -> new ChallengeDto.SubmissionDto(s.id(), s.userId(), s.value())).toList();
 	}
 
 	private List<ChallengeDto.UserDto> convertUserIds(List<String> userIds) {

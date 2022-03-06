@@ -20,7 +20,7 @@ public class SubmissionController {
 	@PostMapping
 	public void submit(@RequestBody SubmitRequest request) {
 		log.info("submit.enter; challengeId={} value={}", request.challengeId(), request.value());
-		submissionService.submit(request.challengeId(), request.value());
+		submissionService.submit(request.userId(), request.challengeId(), request.value());
 	}
 
 }

@@ -1,13 +1,4 @@
 package org.challenger.challenger.domain;
 
-// посылка, подача
-public class Submission {
-    public String submissionId;
-    public Boolean type; // тип апррув
-
-    public Submission(String submissionId, Boolean type) {
-        this.submissionId = submissionId;
-        this.type = type;
-    }
-
+public record Submission(String id, String userId, Integer value) {
 }

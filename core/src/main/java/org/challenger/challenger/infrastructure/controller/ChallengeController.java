@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.challenger.challenger.domain.Challenge;
 import org.challenger.challenger.infrastructure.controller.dto.ChallengeCreateRequest;
+import org.challenger.challenger.infrastructure.controller.dto.ChallengeCreateResponse;
 import org.challenger.challenger.infrastructure.controller.dto.ChallengeDto;
 import org.challenger.challenger.infrastructure.converter.ObjectConverter;
 import org.challenger.challenger.infrastructure.service.ChallengeService;
@@ -19,9 +20,11 @@ public class ChallengeController {
 	private final ObjectConverter objectConverter;
 
 	@PostMapping
-	public void createChallenge(@RequestBody ChallengeCreateRequest request) {
+	public ChallengeCreateResponse createChallenge(@RequestBody ChallengeCreateRequest request) {
 		log.info("createChallenge.enter; name={}", request.name());
-		challengeService.createChallenge(request.name(), request.goal(), request.ownerUserId(), request.userIds());
+		Challenge challenge =
+			challengeService.createChallenge(request.name(), request.goal(), request.ownerUserId(), request.userIds());
+		return new ChallengeCreateResponse(challenge.getId());
 	}
 
 	@GetMapping(value = "{path}")
