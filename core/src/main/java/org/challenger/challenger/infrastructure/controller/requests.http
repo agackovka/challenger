@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8080/api/v1/challenges/d382c4ae-fc26-44c3-846f-d85b98cbc95a
+GET http://localhost:8080/api/v1/challenges/1b87bdd5-df75-47be-a8f6-a8b3b4a935d5
 Content-Type: application/json
 
 
@@ -25,6 +25,6 @@ Content-Type: application/json
 
 {
   "userId": "1",
-  "challengeId": "d382c4ae-fc26-44c3-846f-d85b98cbc95a",
+  "challengeId": "1b87bdd5-df75-47be-a8f6-a8b3b4a935d5",
   "value": 100
 }
