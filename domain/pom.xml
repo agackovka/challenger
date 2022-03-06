@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>domain</artifactId>
+    <name>domain</name>
 
     <dependencies>
         <dependency>

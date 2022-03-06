@@ -1,4 +1,4 @@
-package org.challenger.challenger.service;
+package org.challenger.challenger.domain.service;
 
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package org.challenger.challenger;
+package org.challenger.challenger.domain;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

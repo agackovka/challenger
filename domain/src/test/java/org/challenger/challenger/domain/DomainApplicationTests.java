@@ -1,10 +1,10 @@
-package org.challenger.challenger;
+package org.challenger.challenger.domain;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class InfrastructureApplicationTests {
+class DomainApplicationTests {
 
 	@Test
 	void contextLoads() {
