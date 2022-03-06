@@ -10,4 +10,8 @@ public class ChallengeService {
 	public void createChallenge() {
 		System.out.println('x');
 	}
+
+	public Object getChallenge(String challengeId) {
+		return null;
+	}
 }
