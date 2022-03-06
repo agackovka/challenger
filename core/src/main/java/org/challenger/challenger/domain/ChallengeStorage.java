@@ -10,6 +10,8 @@ public class ChallengeStorage {
 
     //список челенджей
     private final List<Challenge> listChallenges = new ArrayList<>(3);
+    private final List<User> listUsers = new ArrayList<>(3);
+
     private final IdGenerator idGenerator;
 
     //+конструктор который будет принимать айди генератор
@@ -18,9 +20,11 @@ public class ChallengeStorage {
     }
 
     //создать
-    public void createChallenge(String name, String type, Integer goal, Integer progress, Integer userId, Integer submissionId) {
-        Challenge challenge = new Challenge(idGenerator.generateId(), name, type, goal, progress, userId, submissionId);
+    public void createChallenge(String name, String type, Integer goal, Integer progress, Integer userId, String userEmail, Integer submissionId) {
+        Challenge challenge = new Challenge(idGenerator.generateId(), name, type, goal, progress, userId, userEmail, submissionId);
         listChallenges.add(challenge);
+        User user = new User(idGenerator.generateId(), userEmail);
+        listUsers.add(user);
     }
 
     // удалить
@@ -33,5 +37,7 @@ public class ChallengeStorage {
         return listChallenges.get(x);
     }
 
+    // сабмишины юзеры (+email) задейстовать
+    // сабмишин
 
 }
