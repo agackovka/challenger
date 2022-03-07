@@ -24,8 +24,9 @@ public class Challenge {
     private List<String> userIds;
     private List<Submission> submissions;
 
-    public void changeProgress(){
-        this.progress += 1;
+    // изменить прогресс
+    public void appendProgress(Integer submissionValue){
+        this.progress += submissionValue;
     }
 
 

@@ -15,22 +15,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChallengeService {
 
-	private final ChallengeStorage challengeStorage;
-	private final IdGenerator idGenerator;
+    private final ChallengeStorage challengeStorage;
+    private final IdGenerator idGenerator;
 
-	public Challenge createChallenge(String name, Integer goal, String userId, List<String> ids) {
-		// TODO no validation, will be added later
-		return challengeStorage.createChallenge(name, goal, userId, ids);
-	}
+    public Challenge createChallenge(String name, Integer goal, String userId, List<String> ids) {
+        // TODO no validation, will be added later
+        return challengeStorage.createChallenge(name, goal, userId, ids);
+    }
 
-	public Challenge getChallenge(String challengeId) {
-		log.info("getChallenge.enter; challengeId={}", challengeId);
-		return challengeStorage.getChallenge(challengeId);
-	}
+    public Challenge getChallenge(String challengeId) {
+        log.info("getChallenge.enter; challengeId={}", challengeId);
+        return challengeStorage.getChallenge(challengeId);
+    }
 
-	public void submit(String userId, String challengeId, Integer submissionValue) {
-		Challenge challenge = challengeStorage.getChallenge(challengeId);
-		challenge.getSubmissions().add(new Submission(idGenerator.generateId(), userId, submissionValue));
-		// save
-	}
+    public void submit(String userId, String challengeId, Integer submissionValue) {
+        log.info("submit.enter; userId={} challengeId={} submissionValue={}", userId, challengeId, submissionValue);
+        Challenge challenge = challengeStorage.getChallenge(challengeId);
+        challenge.getSubmissions().add(new Submission(idGenerator.generateId(), userId, submissionValue));
+        challenge.appendProgress(submissionValue);
+        log.info("submit.exit; challenge.progress={}", challenge.getProgress());
+    }
 }
