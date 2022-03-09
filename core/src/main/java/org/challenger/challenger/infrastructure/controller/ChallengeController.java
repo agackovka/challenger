@@ -22,8 +22,13 @@ public class ChallengeController {
 	@PostMapping
 	public ChallengeCreateResponse createChallenge(@RequestBody ChallengeCreateRequest request) {
 		log.info("createChallenge.enter; name={}", request.name());
-		Challenge challenge =
-			challengeService.createChallenge(request.name(), request.goal(), request.ownerUserId(), request.userIds());
+		Challenge challenge = challengeService.createChallenge(
+			request.name(),
+			request.goal(),
+			request.ownerUserId(),
+			request.userIds(),
+			request.chatId()
+		);
 		return new ChallengeCreateResponse(challenge.getId());
 	}
 
