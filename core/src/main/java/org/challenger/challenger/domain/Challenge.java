@@ -29,9 +29,12 @@ public class Challenge {
     private String chatId;
     private List<Submission> submissions;
 
-    // изменить прогресс
+    // добавить прогресс
     public void appendProgress(Integer submissionValue){
         this.progress += submissionValue;
+        if (this.progress >= goal) {
+            state = ChallengeState.FINISHED;
+        }
     }
 
     @Override
