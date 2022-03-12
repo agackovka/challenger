@@ -28,6 +28,7 @@ public class Challenge {
     private String buttons;
 // Domain driven design - 1. bounded contexts 2. 3 kinds of domains
 
+    // добавить прогресс
     public void appendProgress(Integer submissionValue){
         this.progress += submissionValue;
         if (this.progress >= goal) {
