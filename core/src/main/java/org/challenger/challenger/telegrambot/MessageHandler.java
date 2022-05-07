@@ -28,7 +28,6 @@ public class MessageHandler {
 	public static final String CREATE_SUBCOMMAND = "create";
 
 	private final ChallengeService challengeService;
-	private final ChallengeSessionStorage challengeSessionStorage;
 
 	public static final String STATUS_COMMAND = "/status";
 	public static final String CHALLENGE_COMMAND = "/challenge";
@@ -36,7 +35,7 @@ public class MessageHandler {
 
 	public BotApiMethod<?> answerMessage(Message message) {
 		String chatId = message.getChatId().toString();
-		String userId = message.getFrom().getUserName();
+		String userId = String.valueOf(message.getFrom().getId());
 		String text = message.getText();
 
 		if (text != null) {
@@ -64,7 +63,7 @@ public class MessageHandler {
 								)
 								.collect(Collectors.toList());
 							challengeButtons.add(buildButton("Start new challenge", CHALLENGE_START));
-							return buildKeyboard(chatId, "Active challenges: ", challengeButtons);
+							return buildKeyboard(chatId, "List of challenges: ", challengeButtons);
 						}
 					} else {
 						if (paramsNumber >= 3) {
@@ -91,12 +90,6 @@ public class MessageHandler {
 
 								Challenge challenge =
 									challengeService.createChallenge(name, goal, userId, new ArrayList<>(), chatId);
-
-								challengeSessionStorage.put(ChallengeSession.builder()
-										.challenge(challenge)
-										.editState(EditState.INITIAL)
-										.buttons(buttons)
-									.build());
 
 								return buildKeyboard(
 									chatId, challenge.toString(),

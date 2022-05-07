@@ -22,18 +22,13 @@ public class TelegramConfig {
 	}
 
 	@Bean
-	public MessageHandler messageHandler(ChallengeService challengeService, ChallengeSessionStorage challengeSessionStorage) {
-		return new MessageHandler(challengeService, challengeSessionStorage);
+	public MessageHandler messageHandler(ChallengeService challengeService) {
+		return new MessageHandler(challengeService);
 	}
 
 	@Bean
-	public ChallengeSessionStorage sessionStorage() {
-		return new ChallengeSessionStorage();
-	}
-
-	@Bean
-	public CallbackQueryHandler callbackQueryHandler(ChallengeService challengeService, ChallengeSessionStorage challengeSessionStorage) {
-		return new CallbackQueryHandler(challengeService, challengeSessionStorage);
+	public CallbackQueryHandler callbackQueryHandler(ChallengeService challengeService) {
+		return new CallbackQueryHandler(challengeService);
 	}
 
 	@Bean

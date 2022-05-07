@@ -2,10 +2,7 @@ package org.challenger.challenger.infrastructure.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.challenger.challenger.domain.Challenge;
-import org.challenger.challenger.domain.ChallengeStorage;
-import org.challenger.challenger.domain.IdGenerator;
-import org.challenger.challenger.domain.Submission;
+import org.challenger.challenger.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +21,13 @@ public class ChallengeService {
     }
 
     public Challenge createChallenge(String name, Integer goal, String userId, List<String> ids, String chatId) {
+        log.info("createChallenge; challenge.name = {}", name);
         return challengeStorage.createChallenge(name, goal, userId, ids, chatId);
+    }
+
+    public Challenge createChallenge(Challenge challenge) {
+        log.info("createChallenge; challenge.id = {}", challenge.getId());
+        return challengeStorage.createChallenge(challenge);
     }
 
     public Challenge getChallenge(String challengeId) {
@@ -34,14 +37,25 @@ public class ChallengeService {
 
     public void submit(String userId, String challengeId, Integer submissionValue) {
         log.info("submit.enter; userId={} challengeId={} submissionValue={}", userId, challengeId, submissionValue);
-        Challenge challenge = challengeStorage.getChallenge(challengeId);
-        challenge.getSubmissions().add(new Submission(idGenerator.generateId(), userId, submissionValue));
-        challenge.appendProgress(submissionValue);
-        log.info("submit.exit; challenge.progress={}", challenge.getProgress());
+//        Challenge challenge = challengeStorage.getChallenge(challengeId);
+//        challenge.getSubmissions().add(new Submission(idGenerator.generateId(), userId, submissionValue));
+//        challenge.appendProgress(submissionValue);
+        challengeStorage.createSubmissionByChallengeId(new Submission(idGenerator.generateId(), userId, submissionValue), challengeId);
+        log.info("submit.exit; challenge.progress={}", challengeStorage.getChallengeProgress(challengeId));
     }
 
     public List<Challenge> findChallengeByChatId(String chatId) {
         log.info("findChallengeByChatId.enter; chatId={}", chatId);
-        return challengeStorage.getChallengeByChatId(chatId);
+        return challengeStorage.getChallengesByChatId(chatId);
+    }
+
+    public void linkUsersWithChallenge(List<String> ids, String challengeId) {
+        log.info("linkUsersWithChallenge; challenge.id = {}", challengeId);
+        challengeStorage.linkUsersWithChallenge(ids, challengeId);
+    }
+
+    public void updateChallengeState(String challengeId, ChallengeState challengeState) {
+        log.info("updateChallengeState; challenge.id = {}, challengeState = {}", challengeId, challengeState);
+        challengeStorage.updateChallengeState(challengeId, challengeState);
     }
 }

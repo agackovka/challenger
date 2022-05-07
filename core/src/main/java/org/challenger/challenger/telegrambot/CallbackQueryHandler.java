@@ -2,14 +2,18 @@ package org.challenger.challenger.telegrambot;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.challenger.challenger.domain.Challenge;
 import org.challenger.challenger.domain.ChallengeState;
 import org.challenger.challenger.infrastructure.service.ChallengeService;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,18 +24,21 @@ import static org.challenger.challenger.telegrambot.BotUtils.*;
 public class CallbackQueryHandler {
 
 	private final ChallengeService challengeService;
-	private final ChallengeSessionStorage challengeSessionStorage;
 
 	public BotApiMethod<?> processCallbackQuery(CallbackQuery callbackQuery) {
 		String chatId = callbackQuery.getMessage().getChatId().toString();
-		String userId = callbackQuery.getFrom().getUserName();
+		User user = callbackQuery.getFrom();
+		String userId = String.valueOf(user.getId());
 		String[] cbData = callbackQuery.getData().split(" ");
+
+		// TODO will have to preserve userData in the database - firstname, lastName, userName
+		// TODO will have to check whether the preserved data is correct enough
+		String userName = user.getUserName() != null ? user.getUserName() : user.getFirstName() + " " + user.getLastName();
 
 		String cbCommand = cbData[0];
 		String cbFirstParam = cbData.length > 1 ? cbData[1] : null;
 
 		Challenge challenge = challengeService.getChallenge(cbFirstParam);
-		ChallengeSession sess = challengeSessionStorage.get(challenge.getId());
 
 		switch (cbCommand) {
 			case MessageHandler.CHALLENGE_START:
@@ -39,24 +46,23 @@ public class CallbackQueryHandler {
 					"/challenge create {challengeName} {goal} {button1} {button2} {button3}");
 
 			case MessageHandler.CHALLENGE_DETAILS:
-				return buildDetailsButtons(chatId, sess);
+				return buildDetailsButtons(chatId, challenge);
 
 			case MessageHandler.CHALLENGE_JOIN:
 				if (challenge.getUserIds().contains(userId)) {
-					return getText(chatId, userId + " already here");
+					return getText(chatId, userName + " already here");
 				} else {
-					challenge.getUserIds().add(userId);
+					challengeService.linkUsersWithChallenge(List.of(userId), challenge.getId());
 				}
-				return getText(chatId, userId + " joined");
+				return getText(chatId, userName + " joined");
 
 			case MessageHandler.CHALLENGE_ACTIVATE:
 				if (challenge.getUserIds().isEmpty()) {
 					return getText(chatId, "Challenge cannot be activated without participants");
 				} else {
 					if (challenge.getState() == ChallengeState.INITIAL) {
-						challenge.setState(ChallengeState.ACTIVATED);
-						ChallengeSession session = challengeSessionStorage.get(challenge.getId());
-						return buildDetailsButtons(chatId, session);
+						challengeService.updateChallengeState(challenge.getId(), ChallengeState.ACTIVATED);
+						return buildDetailsButtons(chatId, challenge);
 					} else {
 						return getText(chatId, "Challenge already activated");
 					}
@@ -78,10 +84,8 @@ public class CallbackQueryHandler {
 		return null;
 	}
 
-	private SendMessage buildDetailsButtons(String chatId, ChallengeSession sess) {
-		List<InlineKeyboardButton> submitButtons = getSubmitButtons(sess);
-
-		Challenge challenge = sess.getChallenge();
+	private SendMessage buildDetailsButtons(String chatId, Challenge challenge) {
+		List<InlineKeyboardButton> submitButtons = getSubmitButtons(challenge);
 
 		submitButtons.add(0, buildButton("I'm in", appendParam(MessageHandler.CHALLENGE_JOIN, challenge.getId())));
 		submitButtons.add(1, buildButton("Activate challenge", appendParam(MessageHandler.CHALLENGE_ACTIVATE, challenge.getId())));
@@ -89,9 +93,10 @@ public class CallbackQueryHandler {
 		return buildKeyboard(chatId, challenge.toString(), submitButtons);
 	}
 
-	private List<InlineKeyboardButton> getSubmitButtons(ChallengeSession session) {
-		Challenge challenge = session.getChallenge();
-		return session.getButtons().stream()
+	private List<InlineKeyboardButton> getSubmitButtons(Challenge challenge) {
+		String buttons = ObjectUtils.defaultIfNull(challenge.getButtons(), "");
+		buttons = "5,10,15";
+		return Arrays.stream(buttons.split(","))
 			.map(value -> buildButton(
 				"Submit %s".formatted(value),
 				appendParam(MessageHandler.CHALLENGE_SUBMIT, challenge.getId(), value))
