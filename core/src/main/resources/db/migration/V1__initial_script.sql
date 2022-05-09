@@ -1,26 +1,18 @@
 create table users
 (
-    id         varchar not null
-        primary key,
+    id         varchar not null primary key,
     name       varchar not null,
     first_name varchar,
     last_name  varchar
 );
 
-alter table users
-    owner to postgres;
-
 create table users_challenges
 (
-    userid      varchar not null,
-    challengeid varchar not null,
-    createdat   timestamp,
-    id          integer generated always as identity
-        primary key
+    user_id      varchar not null,
+    challenge_id varchar not null,
+    created_at   timestamp,
+    id          integer not null primary key
 );
-
-alter table users_challenges
-    owner to postgres;
 
 create table challenges
 (
@@ -28,8 +20,8 @@ create table challenges
         primary key,
     progress   integer not null,
     goal       integer not null,
-    ownuserid  varchar not null,
-    chatid     varchar not null,
+    owner_user_id  varchar not null,
+    chat_id     varchar not null,
     name       varchar not null,
     created_at timestamp,
     updated_at timestamp,
@@ -38,18 +30,11 @@ create table challenges
     buttons    varchar
 );
 
-alter table challenges
-    owner to postgres;
-
 create table submissions
 (
     id          varchar not null
         primary key,
-    challengeid varchar not null,
+    challenge_id varchar not null,
     value       integer not null,
     user_id     varchar not null
 );
-
-alter table submissions
-    owner to postgres;
-
