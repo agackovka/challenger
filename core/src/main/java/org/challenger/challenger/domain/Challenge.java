@@ -17,7 +17,6 @@ public class Challenge {
 
     @Builder.Default
     private final ChallengeType type = ChallengeType.NUMERIC;
-
     private ChallengeState state;
     private Integer progress; // прогресс (91из100)
     private String name; // название
@@ -26,7 +25,6 @@ public class Challenge {
     private List<String> userIds = new ArrayList<>();
     private String chatId;
     private List<Submission> submissions = new ArrayList<>();
-
     private String buttons;
 // Domain driven design - 1. bounded contexts 2. 3 kinds of domains
 

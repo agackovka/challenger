@@ -2,6 +2,7 @@ package org.challenger.challenger.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,8 @@ public class ChallengeStorage {
 
     private static final Integer DEFAULT_PROGRESS = 0;
 
-    private final ChallengeRepository challengeRepository = new ChallengeRepository();
-    private final UsersChallengesRepository usersChallengesRepository = new UsersChallengesRepository();
+    private final ChallengeRepository challengeRepository;
+    private final UsersChallengesRepository usersChallengesRepository;
     private final SubmissionRepository submissionRepository;
     private final IdGenerator idGenerator;
 
@@ -45,7 +46,8 @@ public class ChallengeStorage {
     public Challenge getChallenge(String challengeId) {
         Challenge challenge = new Challenge();
         challenge.setState(ChallengeState.INITIAL);
-//        challenge = challengeRepository.getChallengeById(challengeId);
+        // TODO first to fix
+        challenge = challengeRepository.getChallengeById(challengeId);
         challenge.setSubmissions(getSubmissionByChallengeId(challengeId));
         return challenge;
     }

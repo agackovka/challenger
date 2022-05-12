@@ -1,9 +1,7 @@
 package org.challenger.challenger.infrastructure.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.challenger.challenger.domain.ChallengeStorage;
-import org.challenger.challenger.domain.IdGenerator;
-import org.challenger.challenger.domain.SubmissionRepository;
+import org.challenger.challenger.domain.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -16,8 +14,8 @@ import java.util.UUID;
 public class BaseConfiguration {
 
 	@Bean
-	public ChallengeStorage challengeStorage(SubmissionRepository submissionRepository, IdGenerator idGenerator) {
-		return new ChallengeStorage(submissionRepository,idGenerator);
+	public ChallengeStorage challengeStorage(ChallengeRepository challengeRepository, UsersChallengesRepository usersChallengesRepository, SubmissionRepository submissionRepository, IdGenerator idGenerator) {
+		return new ChallengeStorage(challengeRepository, usersChallengesRepository, submissionRepository,idGenerator);
 	}
 
 	@Bean
