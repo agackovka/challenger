@@ -2,6 +2,7 @@ package org.challenger.challenger.infrastructure.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.challenger.challenger.infrastructure.controller.dto.ChallengeDto;
 import org.challenger.challenger.infrastructure.controller.dto.SubmitRequest;
 import org.challenger.challenger.infrastructure.service.SubmissionService;
 import org.springframework.web.bind.annotation.PostMapping;

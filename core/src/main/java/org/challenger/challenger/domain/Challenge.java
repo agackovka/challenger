@@ -2,6 +2,9 @@ package org.challenger.challenger.domain;
 
 
 import lombok.*;
+import org.challenger.challenger.infrastructure.controller.dto.ChallengeActivateDto;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;

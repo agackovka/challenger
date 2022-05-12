@@ -3,6 +3,7 @@ package org.challenger.challenger.infrastructure.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.challenger.challenger.domain.*;
+import org.challenger.challenger.infrastructure.exception.IncorrectActivationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,4 +59,17 @@ public class ChallengeService {
         log.info("updateChallengeState; challenge.id = {}, challengeState = {}", challengeId, challengeState);
         challengeStorage.updateChallengeState(challengeId, challengeState);
     }
+
+    public void activate(String challengeId) {
+        Challenge challenge = challengeStorage.getChallenge(challengeId);
+        if (challenge.getState() == ChallengeState.INITIAL) {
+            challenge.setState(ChallengeState.ACTIVATED);
+        } else if (challenge.getState() == ChallengeState.ACTIVATED) {
+            throw new IncorrectActivationException();
+        } else {
+            throw new IncorrectActivationException();
+        }
+        log.info("activate.exit; challenge.state={}", challenge.getState());
+    }
+
 }

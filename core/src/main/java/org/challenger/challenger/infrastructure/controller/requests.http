@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8080/api/v1/challenges/fe462157-585e-4dd5-891b-40d56eaf01e1
+GET http://localhost:8080/api/v1/challenges/f70f201c-5938-4662-b4ab-87ba4e1b3be9
 Content-Type: application/json
 
 
@@ -25,7 +25,14 @@ Content-Type: application/json
 
 {
   "userId": "1",
-  "challengeId": "fe462157-585e-4dd5-891b-40d56eaf01e1",
+  "challengeId": "719e0aa9-189b-471b-8726-78b8cc9d4fef",
   "value": 100
 }
 
+###
+POST http://localhost:8080/api/v1/challenges/activate
+Content-Type: application/json
+
+{
+  "challengeId": "2a8a891d-0d27-4aa5-ab62-f172f79f5abd"
+}
