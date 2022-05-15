@@ -1,7 +1,8 @@
 package org.challenger.challenger.infrastructure.exception;
 
 public class IncorrectActivationException extends RuntimeException {
-	public IncorrectActivationException() {
-		super();
+
+	public IncorrectActivationException(String message) {
+		super(message);
 	}
 }

@@ -7,5 +7,5 @@ import java.util.List;
 public interface SubmissionRepository {
 	public List<Submission> getSubmissionByChallengeId(String challengeId);
 
-	public void createSubmissionByChallengeId(Submission submission, String challengeId);
+	public void createSubmissionByChallengeId(String challengeId, Submission submission);
 }

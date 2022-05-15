@@ -47,8 +47,10 @@ public class ChallengeController {
 	}
 
 	@ExceptionHandler(IncorrectActivationException.class)
-	public ResponseEntity<?> handleException() {
-		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+	public ResponseEntity<?> handleException(IncorrectActivationException exception) {
+		return ResponseEntity
+			.status(HttpStatus.UNPROCESSABLE_ENTITY)
+			.body(exception.getMessage());
 	}
 
 }

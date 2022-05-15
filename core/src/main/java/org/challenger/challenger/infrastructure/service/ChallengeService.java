@@ -38,10 +38,7 @@ public class ChallengeService {
 
     public void submit(String userId, String challengeId, Integer submissionValue) {
         log.info("submit.enter; userId={} challengeId={} submissionValue={}", userId, challengeId, submissionValue);
-//        Challenge challenge = challengeStorage.getChallenge(challengeId);
-//        challenge.getSubmissions().add(new Submission(idGenerator.generateId(), userId, submissionValue));
-//        challenge.appendProgress(submissionValue);
-        challengeStorage.createSubmissionByChallengeId(new Submission(idGenerator.generateId(), userId, submissionValue), challengeId);
+        challengeStorage.submit(challengeId, new Submission(idGenerator.generateId(), userId, submissionValue));
         log.info("submit.exit; challenge.progress={}", challengeStorage.getChallengeProgress(challengeId));
     }
 
@@ -63,11 +60,11 @@ public class ChallengeService {
     public void activate(String challengeId) {
         Challenge challenge = challengeStorage.getChallenge(challengeId);
         if (challenge.getState() == ChallengeState.INITIAL) {
-            challenge.setState(ChallengeState.ACTIVATED);
+            challengeStorage.activateChallenge(challengeId);
         } else if (challenge.getState() == ChallengeState.ACTIVATED) {
-            throw new IncorrectActivationException();
+            throw new IncorrectActivationException("Already activated");
         } else {
-            throw new IncorrectActivationException();
+            throw new IncorrectActivationException("Incorrect state");
         }
         log.info("activate.exit; challenge.state={}", challenge.getState());
     }

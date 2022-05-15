@@ -8,6 +8,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <spring-boot.build-image.imageName>agackovka/challenger-core:${project.version}</spring-boot.build-image.imageName>
+    </properties>
+
     <artifactId>core</artifactId>
     <name>core</name>
 

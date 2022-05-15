@@ -13,8 +13,6 @@ public class SubmissionService {
 
 	public void submit(String userId, String challengeId, Integer submissionValue) {
 		log.info("submit.enter; challengeId={} submissionValue={}", challengeId, submissionValue);
-		// TODO validate total count, throw an event related to the finish of the challenge
-		// TODO add a cross check for user list
 		challengeService.submit(userId, challengeId, submissionValue);
 	}
 

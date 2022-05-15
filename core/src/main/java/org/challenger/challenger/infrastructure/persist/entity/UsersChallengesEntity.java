@@ -9,11 +9,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @Builder
 @Getter
 @Setter
-@Table("user_challenges")
+@Table("users_challenges")
 public class UsersChallengesEntity {
 	@Id
 	private String userId;
 	private String challengeId;
-	private String createdAt;
-	private Integer id;
+	private String id;
 }

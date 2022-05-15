@@ -1,5 +1,6 @@
 package org.challenger.challenger.infrastructure.persist.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@Builder
 @Table("submissions")
 public final class SubmissionEntity {
 	@Id

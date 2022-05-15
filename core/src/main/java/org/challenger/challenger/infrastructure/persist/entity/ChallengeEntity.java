@@ -18,8 +18,6 @@ public final class ChallengeEntity {
 	private String ownerUserId;
 	private String chatId;
 	private String name;
-	private String createdAt;
-	private String updatedAt;
 	private String type;
 	private String state;
 	private String buttons;

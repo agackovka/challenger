@@ -2,7 +2,6 @@ package org.challenger.challenger.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,13 @@ public class ChallengeStorage {
     }
 
     public void linkUsersWithChallenge(List<String> ids, String challengeId) {
-        usersChallengesRepository.linkUsersWithChallenge(ids, challengeId);
+        usersChallengesRepository.linkUsersWithChallenge(challengeId, ids);
+    }
+
+    public List<String> getChallengeParticipants(String challengeId) {
+        return usersChallengesRepository.getUsersIds(challengeId).stream()
+            .map(UsersChallenges::userId)
+            .toList();
     }
 
     public Challenge createChallenge(Challenge challenge) {
@@ -44,11 +49,10 @@ public class ChallengeStorage {
     }
 
     public Challenge getChallenge(String challengeId) {
-        Challenge challenge = new Challenge();
-        challenge.setState(ChallengeState.INITIAL);
-        // TODO first to fix
-        challenge = challengeRepository.getChallengeById(challengeId);
+        Challenge challenge = challengeRepository.getChallengeById(challengeId)
+            .orElseThrow(() -> new IllegalArgumentException("Challenge not found by id %s".formatted(challengeId)));
         challenge.setSubmissions(getSubmissionByChallengeId(challengeId));
+        challenge.setUserIds(getChallengeParticipants(challengeId));
         return challenge;
     }
 
@@ -64,12 +68,23 @@ public class ChallengeStorage {
         return submissionRepository.getSubmissionByChallengeId(challengeId);
     }
 
-    public void createSubmissionByChallengeId(Submission submission, String challengeId) {
-        submissionRepository.createSubmissionByChallengeId(submission, challengeId);
-        challengeRepository.updateChallengeProgress(submission.value(), challengeId);
+    public void submit(String challengeId, Submission submission) {
+        Challenge challenge = this.getChallenge(challengeId);
+        int newProgress = challenge.getProgress() + submission.value();
+        boolean isChallengeFinished = newProgress >= challenge.getGoal();
+        challengeRepository.updateChallengeProgress(challengeId, newProgress);
+        submissionRepository.createSubmissionByChallengeId(challengeId, submission);
+        if (isChallengeFinished) {
+            log.info("Challenged marked as finished id = {}", challengeId);
+            challengeRepository.updateChallengeState(challengeId, ChallengeState.FINISHED);
+        }
     }
 
     public void updateChallengeState(String challengeId, ChallengeState challengeState) {
         challengeRepository.updateChallengeState(challengeId, challengeState);
+    }
+
+    public void activateChallenge(String challengeId) {
+        challengeRepository.updateChallengeState(challengeId, ChallengeState.ACTIVATED);
     }
 }
