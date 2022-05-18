@@ -29,6 +29,7 @@ public class CallbackQueryHandler {
 		String chatId = callbackQuery.getMessage().getChatId().toString();
 		User user = callbackQuery.getFrom();
 		String userId = String.valueOf(user.getId());
+		log.info("Command data: {}", callbackQuery.getData());
 		String[] cbData = callbackQuery.getData().split(" ");
 
 		// TODO will have to preserve userData in the database - firstname, lastName, userName
@@ -38,7 +39,10 @@ public class CallbackQueryHandler {
 		String cbCommand = cbData[0];
 		String cbFirstParam = cbData.length > 1 ? cbData[1] : null;
 
-		Challenge challenge = challengeService.getChallenge(cbFirstParam);
+		Challenge challenge = null;
+		if (cbFirstParam != null) {
+			challenge = challengeService.getChallenge(cbFirstParam);
+		}
 
 		switch (cbCommand) {
 			case MessageHandler.CHALLENGE_START:
@@ -62,6 +66,7 @@ public class CallbackQueryHandler {
 				} else {
 					if (challenge.getState() == ChallengeState.INITIAL) {
 						challengeService.updateChallengeState(challenge.getId(), ChallengeState.ACTIVATED);
+						challenge.setState(ChallengeState.ACTIVATED);
 						return buildDetailsButtons(chatId, challenge);
 					} else {
 						return getText(chatId, "Challenge already activated");
