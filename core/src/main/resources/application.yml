@@ -1,0 +1,26 @@
+app.http.bot: challengrbot
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/challenger?currentSchema=challenger_core
+    username: challenger_owner
+    password: --OVERRIDE--
+    hikari.maximum-pool-size: 50
+telegram-bot:
+  name: challenger
+  token: --OVERRIDE--
+  api-url: https://api.telegram.org/
+  webhook-path: https://692b-188-243-227-243.ngrok.io
+spring-boot.build-image.imageName: agackovka/core
+logging:
+  level:
+    root: trace
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+server:
+  ssl:
+    key-store: classpath:challenger.p12
+    key-store-type: pkcs12
+    key-alias: challenger
+  port: 8443

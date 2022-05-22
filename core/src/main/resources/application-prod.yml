@@ -1,0 +1,4 @@
+server:
+  ssl:
+    key-store-password: ENC(za4vHAvH4B5uwGqRBcbsRYjOdkP5P6tF)
+spring.datasource.password: ENC(qxQjIEzbZfTf/a/d9a+d9dZgl4WKHUF8)

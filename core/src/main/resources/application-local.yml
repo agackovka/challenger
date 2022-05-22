@@ -1,0 +1,7 @@
+server:
+  ssl:
+    key-store-password: ENC(TBJrcK11pKopn2xaq0ep8xj+L1oTwIjj)
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/challenger?currentSchema=challenger_core
+  password: ENC(w8NIRg5aqrae7HGjdad8mSSlFFdoLkpe)
+  hikari.maximum-pool-size: 15
