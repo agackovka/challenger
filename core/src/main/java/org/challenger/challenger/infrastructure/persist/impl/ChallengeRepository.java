@@ -4,14 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.challenger.challenger.domain.Challenge;
 import org.challenger.challenger.domain.ChallengeState;
-import org.challenger.challenger.domain.ChallengeType;
+import org.challenger.challenger.domain.User;
 import org.challenger.challenger.infrastructure.converter.ObjectConverter;
 import org.challenger.challenger.infrastructure.persist.entity.ChallengeEntity;
 import org.challenger.challenger.infrastructure.persist.repository.ChallengeEntityRepository;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

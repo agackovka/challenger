@@ -17,18 +17,9 @@ public class ChallengeService {
     private final ChallengeStorage challengeStorage;
     private final IdGenerator idGenerator;
 
-    public Challenge createEmptyChallenge(String userId, String chatId) {
-        return challengeStorage.createChallenge(null, null, userId, new ArrayList<>(), chatId);
-    }
-
     public Challenge createChallenge(String name, Integer goal, String userId, List<String> ids, String chatId) {
         log.info("createChallenge; challenge.name = {}", name);
         return challengeStorage.createChallenge(name, goal, userId, ids, chatId);
-    }
-
-    public Challenge createChallenge(Challenge challenge) {
-        log.info("createChallenge; challenge.id = {}", challenge.getId());
-        return challengeStorage.createChallenge(challenge);
     }
 
     public Challenge getChallenge(String challengeId) {

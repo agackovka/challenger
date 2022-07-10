@@ -1,14 +1,7 @@
 package org.challenger.challenger.domain;
 
-// участник
-public class User {
-    public String userId;
-    public String userEmail;
+import lombok.Builder;
 
-    public User(String userId, String userEmail) {
-        this.userId = userId;
-        this.userEmail = userEmail;
-    }
-
-
+@Builder
+public record User(String id, String name, String firstName, String lastName) {
 }

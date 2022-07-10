@@ -6,13 +6,13 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.challenger.challenger.domain.Challenge;
 import org.challenger.challenger.domain.ChallengeState;
 import org.challenger.challenger.infrastructure.service.ChallengeService;
+import org.challenger.challenger.infrastructure.service.UserService;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +24,7 @@ import static org.challenger.challenger.telegrambot.BotUtils.*;
 public class CallbackQueryHandler {
 
 	private final ChallengeService challengeService;
+	private final UserService userService;
 
 	public BotApiMethod<?> processCallbackQuery(CallbackQuery callbackQuery) {
 		String chatId = callbackQuery.getMessage().getChatId().toString();
@@ -81,7 +82,8 @@ public class CallbackQueryHandler {
 					String value = cbData[2];
 					// the value is validated here
 					challengeService.submit(userId, challenge.getId(), Integer.valueOf(value));
-					return getText(chatId, "%s submitted %s".formatted(userId, value));
+					String handle = userService.calculateUserHandle(userId);
+					return getText(chatId, "%s submitted %s".formatted(handle, value));
 				}
 
 		}
