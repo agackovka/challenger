@@ -1,6 +1,7 @@
 package org.challenger.challenger.infrastructure.config;
 
 import org.challenger.challenger.infrastructure.service.ChallengeService;
+import org.challenger.challenger.infrastructure.service.UserService;
 import org.challenger.challenger.telegrambot.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +28,8 @@ public class TelegramConfig {
 	}
 
 	@Bean
-	public CallbackQueryHandler callbackQueryHandler(ChallengeService challengeService) {
-		return new CallbackQueryHandler(challengeService);
+	public CallbackQueryHandler callbackQueryHandler(ChallengeService challengeService, UserService userService) {
+		return new CallbackQueryHandler(challengeService, userService);
 	}
 
 	@Bean
