@@ -19,6 +19,7 @@ public class UsersChallengesRepository implements org.challenger.challenger.doma
 	@Override
 	public List<UsersChallenges> getUsersIds(String challengeId) {
 		return usersChallengesEntityRepository.findAllByChallengeId(challengeId)
+			.stream()
 			.map(entity -> new UsersChallenges(entity.getUserId(), entity.getChallengeId(), entity.getId()))
 			.toList();
 	}

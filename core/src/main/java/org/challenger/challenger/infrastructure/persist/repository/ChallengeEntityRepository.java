@@ -6,10 +6,10 @@ import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 public interface ChallengeEntityRepository extends CrudRepository<ChallengeEntity, String> {
-	Stream<ChallengeEntity> findByChatId(String chatId);
+	List<ChallengeEntity> findByChatId(String chatId);
 
 	@Modifying
 	@Query("update challenges set state=:challengeState where id=:challengeId")

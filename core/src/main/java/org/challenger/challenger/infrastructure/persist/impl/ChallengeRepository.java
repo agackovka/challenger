@@ -40,6 +40,7 @@ public class ChallengeRepository implements org.challenger.challenger.domain.Cha
 	@Override
 	public List<Challenge> getChallengesByChatId(String chatId) {
 		return challengeEntityRepository.findByChatId(chatId)
+			.stream()
 			.map(entity -> objectConverter.convert(entity, Challenge.class))
 			.toList();
 	}

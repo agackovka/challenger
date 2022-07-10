@@ -4,7 +4,10 @@ spring:
     url: jdbc:postgresql://postgres:5432/challenger?currentSchema=challenger_core
     username: challenger_owner
     password: --OVERRIDE--
-    hikari.maximum-pool-size: 50
+    hikari:
+      maximum-pool-size: 50
+      auto-commit: true
+      minimum-idle: 5
 telegram-bot:
   name: challenger
   token: --OVERRIDE--
@@ -23,4 +26,6 @@ server:
     key-store: classpath:challenger.p12
     key-store-type: pkcs12
     key-alias: challenger
+    protocol: TLS
+    enabled-protocols: TLSv1.2
   port: 8443

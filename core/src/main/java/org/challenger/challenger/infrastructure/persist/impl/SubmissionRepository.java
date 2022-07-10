@@ -20,6 +20,7 @@ public class SubmissionRepository implements org.challenger.challenger.domain.Su
 	@Override
 	public List<Submission> getSubmissionByChallengeId(String challengeId) {
 		return submissionEntityRepository.findByChallengeId(challengeId)
+			.stream()
 			.map(entity -> new Submission(entity.getId(), entity.getUserId(), entity.getValue()))
 			.toList();
 	}
