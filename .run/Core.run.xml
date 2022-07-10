@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Core" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" />
+    <module name="infrastructure" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="org.challenger.challenger.infrastructure.Core" />
+    <option name="VM_PARAMETERS" value="-Dspring.config.additional-location=${user.home}/.challenger/challenger-core.yml" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
