@@ -78,18 +78,17 @@ public class MessageHandler {
 							}
 
 							if (Objects.equals(subCommand, CREATE_SUBCOMMAND)) {
-								List<Integer> buttons = new ArrayList<>();
-
+								List<String> buttons = new ArrayList<>();
 								for (int i = 4; i < messagePieces.length; i++) {
 									try {
-										buttons.add(Integer.valueOf(messagePieces[i]));
+										buttons.add(messagePieces[i]);
 									} catch (NumberFormatException e) {
 										return getText(chatId, "Only numbers are allowed for buttons");
 									}
 								}
 
 								Challenge challenge =
-									challengeService.createChallenge(name, goal, userId, new ArrayList<>(), chatId);
+									challengeService.createChallenge(name, goal, userId, new ArrayList<>(), chatId, buttons);
 
 								return buildKeyboard(
 									chatId, challenge.toString(),

@@ -2,6 +2,7 @@ package org.challenger.challenger.infrastructure.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.challenger.challenger.domain.*;
 import org.challenger.challenger.infrastructure.exception.IncorrectActivationException;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,9 @@ public class ChallengeService {
     private final ChallengeStorage challengeStorage;
     private final IdGenerator idGenerator;
 
-    public Challenge createChallenge(String name, Integer goal, String userId, List<String> ids, String chatId) {
+    public Challenge createChallenge(String name, Integer goal, String userId, List<String> ids, String chatId, List<String> buttons) {
         log.info("createChallenge; challenge.name = {}", name);
-        return challengeStorage.createChallenge(name, goal, userId, ids, chatId);
+        return challengeStorage.createChallenge(name, goal, userId, ids, chatId, StringUtils.join(buttons, ", "));
     }
 
     public Challenge getChallenge(String challengeId) {

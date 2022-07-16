@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 
 @Slf4j
 @RestController
@@ -29,7 +31,8 @@ public class ChallengeController {
 			request.goal(),
 			request.ownerUserId(),
 			request.userIds(),
-			request.chatId()
+			request.chatId(),
+			new ArrayList<>()
 		);
 		return new ChallengeCreateResponse(challenge.getId());
 	}

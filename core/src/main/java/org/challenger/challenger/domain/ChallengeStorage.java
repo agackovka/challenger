@@ -17,7 +17,7 @@ public class ChallengeStorage {
     private final SubmissionRepository submissionRepository;
     private final IdGenerator idGenerator;
 
-    public Challenge createChallenge(String name, Integer goal, String userId, List<String> userIds, String chatId) {
+    public Challenge createChallenge(String name, Integer goal, String userId, List<String> userIds, String chatId,String buttons) {
         Challenge challenge = Challenge.builder()
             .id(idGenerator.generateId())
             .name(name)
@@ -28,6 +28,7 @@ public class ChallengeStorage {
             .state(ChallengeState.INITIAL)
             .submissions(new ArrayList<>())
             .chatId(chatId)
+            .buttons(buttons)
             .build();
         return createChallenge(challenge);
     }

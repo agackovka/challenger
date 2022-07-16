@@ -93,16 +93,13 @@ public class CallbackQueryHandler {
 
 	private SendMessage buildDetailsButtons(String chatId, Challenge challenge) {
 		List<InlineKeyboardButton> submitButtons = getSubmitButtons(challenge);
-
 		submitButtons.add(0, buildButton("I'm in", appendParam(MessageHandler.CHALLENGE_JOIN, challenge.getId())));
 		submitButtons.add(1, buildButton("Activate challenge", appendParam(MessageHandler.CHALLENGE_ACTIVATE, challenge.getId())));
-
 		return buildKeyboard(chatId, challenge.toString(), submitButtons);
 	}
 
 	private List<InlineKeyboardButton> getSubmitButtons(Challenge challenge) {
 		String buttons = ObjectUtils.defaultIfNull(challenge.getButtons(), "");
-		buttons = "5,10,15";
 		return Arrays.stream(buttons.split(","))
 			.map(value -> buildButton(
 				"Submit %s".formatted(value),
