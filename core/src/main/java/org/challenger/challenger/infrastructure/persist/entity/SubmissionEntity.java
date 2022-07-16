@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Getter
@@ -18,4 +19,5 @@ public final class SubmissionEntity {
 	private String userId;
 	private Integer value;
 	private String challengeId;
+	private Instant createdAt;
 }

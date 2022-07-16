@@ -73,8 +73,8 @@ public class CallbackQueryHandler {
 						return getText(chatId, "Challenge already activated");
 					}
 				}
-			case MessageHandler.CHALLENGE_SUBMIT:
 
+			case MessageHandler.CHALLENGE_SUBMIT:
 				if (cbData.length < 3) {
 					log.error("Cannot be submitted due to the error");
 					return getText(chatId, "Cannot be submitted due to the error");
@@ -93,8 +93,10 @@ public class CallbackQueryHandler {
 
 	private SendMessage buildDetailsButtons(String chatId, Challenge challenge) {
 		List<InlineKeyboardButton> submitButtons = getSubmitButtons(challenge);
+
 		submitButtons.add(0, buildButton("I'm in", appendParam(MessageHandler.CHALLENGE_JOIN, challenge.getId())));
 		submitButtons.add(1, buildButton("Activate challenge", appendParam(MessageHandler.CHALLENGE_ACTIVATE, challenge.getId())));
+
 		return buildKeyboard(chatId, challenge.toString(), submitButtons);
 	}
 

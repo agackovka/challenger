@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public class SubmissionRepository implements org.challenger.challenger.domain.Su
 			.id(submission.id())
 			.userId(submission.userId())
 			.value(submission.value())
+			.createdAt(Instant.now())
 			.build();
 		// TODO not the most obvious thing to distinguish between insert and update here since we are creating id
 		// by our idGenerator
