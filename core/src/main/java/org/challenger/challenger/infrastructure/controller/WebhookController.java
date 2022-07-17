@@ -18,14 +18,8 @@ import java.util.Objects;
 public class WebhookController {
 	private final WriteReadBot writeReadBot;
 
-	@PostMapping("/{token}")
-	public BotApiMethod<?> onUpdateReceived(@PathVariable("token") String token, @RequestBody Update update) {
-		String secretToken = "4321";
-		System.out.println("secretToken = " + secretToken);
-		if (!Objects.equals(token, secretToken)) {
-			log.info("Choose correct secrettoken");
-			throw new IllegalArgumentException("unauthorized");
-		}
+	@PostMapping("/")
+	public BotApiMethod<?> onUpdateReceived(@RequestBody Update update) {
 		return writeReadBot.onWebhookUpdateReceived(update);
 	}
 }
