@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Slf4j
@@ -41,6 +42,14 @@ public class ChallengeController {
 	public ChallengeDto getChallenge(@PathVariable("path") String challengeId) {
 		Challenge challenge = challengeService.getChallenge(challengeId);
 		return objectConverter.convert(challenge, ChallengeDto.class);
+	}
+
+	@GetMapping("/chat/{chatId}")
+	public List<ChallengeDto> getChallengesByChatId (@PathVariable("chatId") String chatId) { //добавил
+		List<Challenge> challenges = challengeService.getChallengesByChatId(chatId);
+		return challenges.stream()
+				.map(c -> objectConverter.convert(c, ChallengeDto.class))
+				.toList();
 	}
 
 	@PostMapping("/activate")

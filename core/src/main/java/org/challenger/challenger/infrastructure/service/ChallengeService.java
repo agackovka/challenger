@@ -28,6 +28,11 @@ public class ChallengeService {
         return challengeStorage.getChallenge(challengeId);
     }
 
+    public List<Challenge> getChallengesByChatId(String chatId) {
+        log.info("getChallengesByChatId.enter; challengeId={}", chatId);
+        return challengeStorage.getChallengesByChatId(chatId);
+    }
+
     public void submit(String userId, String challengeId, Integer submissionValue) {
         log.info("submit.enter; userId={} challengeId={} submissionValue={}", userId, challengeId, submissionValue);
         challengeStorage.submit(challengeId, new Submission(idGenerator.generateId(), userId, submissionValue));

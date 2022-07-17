@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8080/api/v1/challenges/926f4739-e441-4f10-b220-1be3d92c23d3
+GET http://localhost:8080/api/v1/challenges/55c212e6-7a60-4cfe-95a1-3924b40424ac
 Content-Type: application/json
 
 
@@ -9,7 +9,7 @@ POST http://localhost:8080/api/v1/challenges
 Content-Type: application/json
 
 {
-  "name": "Pushkin333",
+  "name": "Pushkin444",
   "goal": 300,
   "ownerUserId": "3",
   "chatId": "54321",
@@ -19,6 +19,8 @@ Content-Type: application/json
     "3"
   ]
 }
+###
+GET http://localhost:8080/api/v1/challenges/chat/54321
 
 ###
 POST http://localhost:8080/api/v1/submissions
@@ -26,7 +28,7 @@ Content-Type: application/json
 
 {
   "userId": "1",
-  "challengeId": "926f4739-e441-4f10-b220-1be3d92c23d3",
+  "challengeId": "55c212e6-7a60-4cfe-95a1-3924b40424ac",
   "value": 100
 }
 
@@ -35,5 +37,5 @@ POST http://localhost:8080/api/v1/challenges/activate
 Content-Type: application/json
 
 {
-  "challengeId": "926f4739-e441-4f10-b220-1be3d92c23d3"
+  "challengeId": "55c212e6-7a60-4cfe-95a1-3924b40424ac"
 }
