@@ -9,14 +9,16 @@ spring:
       auto-commit: true
       minimum-idle: 5
 telegram-bot:
+  ui:
+    url: https://challengr.site:8443/ui
   name: challenger
   token: --OVERRIDE--
   api-url: https://api.telegram.org/
   webhook-path: https://692b-188-243-227-243.ngrok.io
 spring-boot.build-image.imageName: agackovka/core
-logging:
-  level:
-    root: trace
+#logging:
+#  level:
+#    root: trace
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES

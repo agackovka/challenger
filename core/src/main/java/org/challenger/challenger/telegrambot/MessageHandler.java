@@ -21,6 +21,8 @@ public class MessageHandler {
 
 	public static final String CHALLENGE_START = "challenge_start";
 	public static final String CHALLENGE_DETAILS = "challenge_details";
+
+	public static final String CHALLENGE_GENERATE_UI_URL = "challenge_generate_ui_url";
 	public static final String CHALLENGE_JOIN = "challenge_join";
 	public static final String CHALLENGE_SUBMIT = "challenge_submit";
 	public static final String CHALLENGE_ACTIVATE = "challenge_activate";
@@ -56,12 +58,20 @@ public class MessageHandler {
 								buildButton("Start new challenge", CHALLENGE_START)
 							);
 						} else {
-							List<InlineKeyboardButton> challengeButtons = challenges.stream()
+							List<InlineKeyboardButton> challengeButtons = new ArrayList<>();
+
+							challengeButtons.add(
+								buildButton(
+									"Generate UI link",
+									CHALLENGE_GENERATE_UI_URL
+								)
+							);
+
+							challengeButtons.addAll(challenges.stream()
 								.map(c -> buildButton(
 									"%s, %s from %s".formatted(c.getName(), c.getProgress(), c.getGoal()),
 									appendParam(CHALLENGE_DETAILS, c.getId()))
-								)
-								.collect(Collectors.toList());
+								).toList());
 							challengeButtons.add(buildButton("Start new challenge", CHALLENGE_START));
 							return buildKeyboard(chatId, "List of challenges: ", challengeButtons);
 						}

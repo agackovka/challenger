@@ -7,6 +7,7 @@ import org.challenger.challenger.domain.Challenge;
 import org.challenger.challenger.domain.ChallengeState;
 import org.challenger.challenger.infrastructure.service.ChallengeService;
 import org.challenger.challenger.infrastructure.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -22,6 +23,9 @@ import static org.challenger.challenger.telegrambot.BotUtils.*;
 @Slf4j
 @RequiredArgsConstructor
 public class CallbackQueryHandler {
+
+	@Value("${telegram-bot.ui.url}")
+	private String baseUiUrl;
 
 	private final ChallengeService challengeService;
 	private final UserService userService;
@@ -46,6 +50,8 @@ public class CallbackQueryHandler {
 		}
 
 		switch (cbCommand) {
+			case MessageHandler.CHALLENGE_GENERATE_UI_URL:
+				return buildUrlLinkButton(chatId, userId);
 			case MessageHandler.CHALLENGE_START:
 				return getText(chatId, "In order to create a challenge use " +
 					"/challenge create {challengeName} {goal} {button1} {button2} {button3}");
@@ -89,6 +95,14 @@ public class CallbackQueryHandler {
 		}
 		log.info("processCallbackQuery.enter;");
 		return null;
+	}
+
+	private SendMessage buildUrlLinkButton(String chatId, String userId) {
+		InlineKeyboardButton urlButton = InlineKeyboardButton.builder()
+			.url(baseUiUrl + "/" + chatId + "/" + userId)
+			.text("Your UI url")
+			.build();
+		return buildKeyboard(chatId, "Your url", urlButton);
 	}
 
 	private SendMessage buildDetailsButtons(String chatId, Challenge challenge) {
