@@ -28,15 +28,4 @@ public class Challenge {
     private String buttons;
 // Domain driven design - 1. bounded contexts 2. 3 kinds of domains
 
-    @Override
-    public String toString() {
-        return """
-            id: %s
-            name: %s
-            users: %s
-            goal: %s
-            progress: %s
-            state: %s
-            """.formatted(getId(), getName(), getUserIds(), getGoal(), getProgress(), getState());
-    }
 }

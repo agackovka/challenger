@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -16,8 +18,44 @@ import java.util.List;
 public class ChallengeService {
 
     private final ChallengeStorage challengeStorage;
+
+    private final UserService userService;
     private final IdGenerator idGenerator;
 
+    public String printChallenge(Challenge challenge) {
+        return """
+            id: %s
+            name: %s
+            users: %s
+            goal: %s
+            progress: %s
+            state: %s,
+            attempts: %s
+            """.formatted(
+                    challenge.getId(),
+                    challenge.getName(),
+                    handleChallengesUsers(challenge),
+                    challenge.getGoal(),
+                    challenge.getProgress(),
+                    challenge.getState(),
+                    gatherSubmissionsByUser(challenge)
+        );
+    }
+
+    public List<String> handleChallengesUsers(Challenge challenge) {
+        return challenge.getUserIds().stream()
+            .map(userService::calculateUserHandle)
+            .toList();
+    }
+
+    private Map<String, Long> gatherSubmissionsByUser(Challenge challenge) {
+        return challenge.getSubmissions().stream()
+            .map(submission -> new Submission(
+                submission.id(),
+                userService.calculateUserHandle(submission.userId()),
+                submission.value()))
+            .collect(Collectors.groupingBy(Submission::userId, Collectors.counting()));
+    }
     public Challenge createChallenge(String name, Integer goal, String userId, List<String> ids, String chatId, List<String> buttons) {
         log.info("createChallenge; challenge.name = {}", name);
         return challengeStorage.createChallenge(name, goal, userId, ids, chatId, StringUtils.join(buttons, ", "));

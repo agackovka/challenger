@@ -111,7 +111,7 @@ public class CallbackQueryHandler {
 		submitButtons.add(0, buildButton("I'm in", appendParam(MessageHandler.CHALLENGE_JOIN, challenge.getId())));
 		submitButtons.add(1, buildButton("Activate challenge", appendParam(MessageHandler.CHALLENGE_ACTIVATE, challenge.getId())));
 
-		return buildKeyboard(chatId, challenge.toString(), submitButtons);
+		return buildKeyboard(chatId, challengeService.printChallenge(challenge), submitButtons);
 	}
 
 	private List<InlineKeyboardButton> getSubmitButtons(Challenge challenge) {
