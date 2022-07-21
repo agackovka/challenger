@@ -29,7 +29,7 @@ public class ChallengeService {
             users: %s
             goal: %s
             progress: %s
-            state: %s,
+            state: %s
             attempts: %s
             """.formatted(
                     challenge.getId(),
